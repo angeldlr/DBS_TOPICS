@@ -39,15 +39,15 @@ CREATE TABLE lector(
 );
 
 CREATE TABLE prestamo(
-	idLibro INT UNIQUE NOT NULL,
-    idSucursal INT UNIQUE NOT NULL,
-    numTarjeta INT UNIQUE NOT NULL,
+	idLibro INT NOT NULL,
+    idSucursal INT NOT NULL,
+    numTarjeta INT NOT NULL,
     fechaSalida DATE NOT NULL,
     fechaDevolucion DATE NOT NULL,
     PRIMARY KEY (idLibro,idSucursal,numTarjeta),
-    FOREIGN KEY fkLibro(idLibro) REFERENCES libro(idLibro) ON UPDATE CASCADE ON DELETE NO ACTION,
-    FOREIGN KEY fkSucursal(idSucursal) REFERENCES sucursalBiblioteca(idSucursal) ON UPDATE CASCADE ON DELETE NO ACTION,
-	FOREIGN KEY fkLector(numTarjeta) REFERENCES lector(numTarjeta) ON UPDATE CASCADE ON DELETE NO ACTION
+    FOREIGN KEY fkLibroPrestamo(idLibro) REFERENCES libro(idLibro) ON UPDATE CASCADE ON DELETE NO ACTION,
+    FOREIGN KEY fkSucursalPrestamo(idSucursal) REFERENCES sucursalBiblioteca(idSucursal) ON UPDATE CASCADE ON DELETE NO ACTION,
+	FOREIGN KEY fkLectorPrestamo(numTarjeta) REFERENCES lector(numTarjeta) ON UPDATE CASCADE ON DELETE NO ACTION
 );
 /*Querys inserción editoriales*/
 INSERT INTO `DBLibreria`.`editorial`
@@ -264,3 +264,57 @@ VALUES
 (3,
 3,
 2);
+/*Vistas del que pueden funcionar para el sistema*/
+CREATE OR REPLACE VIEW librosDisponiblesVista AS
+	SELECT a.idLibro,a.titulo,d.nombreAutor,b.idSucursal,c.nombreSucursal,b.numeroCopias
+	FROM libro a
+	INNER JOIN copiasLibro b ON a.idLibro = b.idLibro
+	INNER JOIN sucursalBiblioteca c ON b.idSucursal = c.idSucursal
+    INNER JOIN autoresLibro d ON d.idLibro = a.idLibro;
+    
+/*Trigger*/
+/*Procedures*/
+DELIMITER //
+CREATE PROCEDURE nuevoPrestamo(IN libro INT,IN autor VARCHAR(60),IN sucursal INT,IN numLector INT)
+BEGIN
+	DECLARE librosDisponibles INT;
+    
+    DECLARE exit handler for sqlexception
+	  BEGIN
+		GET DIAGNOSTICS CONDITION 1
+        @p1=RETURNED_SQLSTATE,@p2=MESSAGE_TEXT;
+        select @p1,@p2;
+	  ROLLBACK;
+	END;
+
+	DECLARE exit handler for sqlwarning
+	 BEGIN
+		GET DIAGNOSTICS CONDITION 1
+        @p1=RETURNED_SQLSTATE,@p2=MESSAGE_TEXT;
+        select @p1,@p2;
+	 ROLLBACK;
+	END;
+    START TRANSACTION;
+    INSERT INTO `DBLibreria`.`prestamo` (`idLibro`,`idSucursal`,`numTarjeta`,`fechaSalida`,`fechaDevolucion`)
+    VALUES(libro,sucursal,numLector,curdate(),adddate(curdate(),INTERVAL 21 DAY));
+
+    /*Obtenemos el número de libros disponibles*/
+    /*SELECT numeroCopias INTO librosDisponibles 
+    FROM librosDisponiblesVista
+	WHERE idLibro=libro and idSucursal=sucursal and nombreAutor=autor;
+    /*Verificamos la disponibilidad*/
+    /*IF librosDisponibles=0 THEN 
+		INSERT INTO `DBLibreria`.`sucursalBiblioteca`
+		(`idSucursal`,
+		`nombreSucursal`,
+		`direccion`)
+		VALUES
+		();
+    END IF;*/
+    COMMIT;
+    #SELECT librosDisponibles;
+END //
+DELIMITER ;
+/*Para invocar al procedure*/
+#call nuevoPrestamo(2,'Dan Brown',2,1);
+#call nuevoPrestamo(3,'Patrick Suskind',2,1);
