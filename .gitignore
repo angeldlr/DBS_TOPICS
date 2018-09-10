@@ -1,6 +1,6 @@
 /UIDBLibreria/build/
 /UIDBLibreria/dist/
-nbproject/private/
+nbproject/private/*
 build/
 nbbuild/
 dist/
