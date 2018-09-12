@@ -85,25 +85,60 @@ INSERT INTO `DBLibreria`.`libro`
 `titulo`,
 `editorialNom`)
 VALUES
-(null,
-'El fin del mundo y un despiadado país de las maravillas',
-'Alamdia');
-INSERT INTO `DBLibreria`.`libro`
-(`idLibro`,
-`titulo`,
-`editorialNom`)
-VALUES
-(null,
-'La fortaleza dígital',
-'Acantilado');
-INSERT INTO `DBLibreria`.`libro`
-(`idLibro`,
-`titulo`,
-`editorialNom`)
-VALUES
-(null,
-'El perfume',
-'Nevsky');
+(null,'El fin del mundo y un despiadado país de las maravillas','Alamdia'),
+(null,'La fortaleza dígital','Acantilado'),
+(null,'El perfume','Nevsky'),
+(null,'Poema de Gilgamesh','Ariel'),
+(null,'Libro de Job (de la Biblia) ','Ariel'),
+(null,'Las mil y una noches','Ariel'),
+(null,'Saga de Njál ','Ariel'),
+(null,'Todo se desmorona','Alianza'),
+(null,'Cuentos infantiles','Alianza'),
+(null,'Divina Comedia','Alianza'),
+(null,'Orgullo y prejuicio','Alianza'),
+(null,'Papá Goriot ','Síntesis'),
+(null,'Decamerón ','Síntesis'),
+(null,'Ficciones ','Síntesis'),
+(null,'Cumbres Borrascosas','Síntesis'),
+(null,'El extranjero','Síntesis'),
+(null,'Poemas ','Síntesis'),
+(null,'Viaje al fin de la noche','Síntesis'),
+(null,'Don Quijote de la Mancha','Santillana'),
+(null,'Los cuentos de Canterbury','Santillana'),
+(null,'Relatos cortos ','Santillana'),
+(null,'Nostromo ','Santillana'),
+(null,'Grandes Esperanzas ','Santillana'),
+(null,'Jacques el fatalista','Santillana'),
+(null,'Crimen y castigo','Santillana'),
+(null,'El idiota ','Cívitas'),
+(null,'Los endemoniados','Cívitas'),
+(null,'Los hermanos Karamazov','McGraw-Hill'),
+(null,'Middlemarch','McGraw-Hill'),
+(null,'El hombre invisible','McGraw-Hill'),
+(null,'Medea ','McGraw-Hill'),
+(null,'¡Absalom, Absalom!','McGraw-Hill'),
+(null,'El ruido y la furia','McGraw-Hill'),
+(null,'Madame Bovary','Siglo XXI'),
+(null,'La educación sentimental','Siglo XXI'),
+(null,'Romancero gitano','Springer'),
+(null,'Cien años de soledad','Springer'),
+(null,'El amor en los tiempos del cólera','Springer'),
+(null,'Fausto','Catedra'),
+(null,'Almas muertas','Catedra'),
+(null,'El tambor de hojalata ','Aranzadi'),
+(null,'Hambre ','CSIC'),
+(null,'El viejo y el mar','CSIC'),
+(null,'Ilíada ','CSIC'),
+(null,'Odisea ','Pirámide'),
+(null,'Casa de muñecas','Pirámide'),
+(null,'Ulises ','Crítica'),
+(null,'Relatos cortos ','Crítica'),
+(null,'El proceso ','Trotta'),
+(null,'El castillo ','Trotta'),
+(null,'Shakuntala','Paidós'),
+(null,'El sonido de la montaña ','Bosch'),
+(null,'Zorba, el griego ','Marcial Pons'),
+(null,'El cuaderno dorado ','Tecnos');
 /*Querys inserción autores*/
 INSERT INTO `DBLibreria`.`autoresLibro`
 (`idLibro`,
@@ -130,32 +165,45 @@ INSERT INTO `DBLibreria`.`lector`
 `direccion`,
 `telefono`)
 VALUES
-(null,
-'Angel De La Rosa',
-'Calle Wallaby,42,Sydney',
-'55-33-99-44-22');
-
-INSERT INTO `DBLibreria`.`lector`
-(`numTarjeta`,
-`nombre`,
-`direccion`,
-`telefono`)
-VALUES
-(null,
-'Jackson Carter Gutierritos',
-'Soldedad 200,33,Ecatepec Edo de México',
-'30-24-36-77-11');
-
-INSERT INTO `DBLibreria`.`lector`
-(`numTarjeta`,
-`nombre`,
-`direccion`,
-`telefono`)
-VALUES
-(null,
-'Mariana Gonzáles',
-'Matamoros,32,Morelia Mich',
-'2-45-27-08');
+(null,'Angel De La Rosa','Calle Wallaby,42,Sydney','55-33-99-44-22'),
+(null,'Jackson Carter Gutierritos','Soldedad 200,33,Ecatepec Edo de México','30-24-36-77-11'),
+(null,'Luella Givens','Emerald Dale','6152800936'),
+(null,'Carmelo Laliberte','Emerald Dale','7616327546'),
+(null,'Vinay Ornelas','Hidden Limits','8248125630'),
+(null,'Ultima Retzlaff','Hidden Limits','7473338289'),
+(null,'Hedva Feltner','Crystal Arbor','7787684508'),
+(null,' Aubin Guinn','Crystal Arbor','8670082428'),
+(null,'Snehal Canales','Umber Corner','8724313010'),
+(null,'Telo Bair','Umber Corner','7811966208'),
+(null,'Melburn Juergens','Dewy Swale','7279377925'),
+(null,' Haralda Sipes','Dewy Swale','8416462528'),
+(null,'Chloris Roney','Red Route','8382708820'),
+(null,'Jarka McCaskill','Red Route','8249161633'),
+(null,'Ackerley Ives','Quiet Woods','7123425508'),
+(null,'Erhard Sennett','Bright Trail','7823789481'),
+(null,'Gustavo Guinn','Bright Trail','7755578661'),
+(null,'Garwood Heinrich','Bright Trail','7873061274'),
+(null,'Clifford Dodson','Sleepy Way','8819802859'),
+(null,' Brody Veltri','Sleepy Way','6949729505'),
+(null,'Nayoko Moralez','Sleepy Way','6708675028'),
+(null,'Shaw Sandy',' Round Chase','7689133561'),
+(null,'Javed Keyser',' Round Chase','8727887459'),
+(null,'Boa Wick','Dusty View Boulevard','6747869977'),
+(null,'Talbot Moir','Dusty View Boulevard','6648048645'),
+(null,' Ajay McQuade','Velvet Via','8587179278'),
+(null,'Mohan Fullmer','Velvet Via','7842848546'),
+(null,'Nerhim Arendt',' Fallen Lake Mountain','6486414302'),
+(null,'Delyth Eyler',' Fallen Lake Mountain','7995799970'),
+(null,'Corina Tiemann',' Fallen Lake Mountain','8821564442'),
+(null,'Arval Wightman',' Old Hill','8126678397'),
+(null,' Ernest Gann',' Old Hill','8535850332'),
+(null,'Iden Pine','Colonial Lagoon Quay','7611325203'),
+(null,'Salihah Berryman','Colonial Lagoon Quay','8173287259'),
+(null,'Galloway Arnette','Colonial Lagoon Quay','7531119062'),
+(null,'Abhilasha Sosnowski',' Clear Nectar Passage','6569556524'),
+(null,' Zeus Farrow',' Misty Branch Trace','8260687195'),
+(null,'Kade Moralez','Bright Trail','6955347037'),
+(null,'Mariana Gonzáles','Matamoros,32,Morelia Mich','2-45-27-08');
 /*Query sucursales*/
 INSERT INTO `DBLibreria`.`sucursalBiblioteca`
 (`idSucursal`,
