@@ -1,5 +1,7 @@
-DROP DATABASE DBLibreria;
+DROP DATABASE IF EXISTS DBLibreria; 
 CREATE DATABASE DBLibreria;
+#CREATE USER 'dbstp1'@'localhost' identified by 'topics';
+#GRANT ALL ON DBLibreria.* TO 'dbstp1'@'localhost';
 USE DBLibreria;
 CREATE TABLE editorial(
     editorialNom VARCHAR(50) PRIMARY KEY,
@@ -266,55 +268,81 @@ VALUES
 2);
 /*Vistas del que pueden funcionar para el sistema*/
 CREATE OR REPLACE VIEW librosDisponiblesVista AS
-	SELECT a.idLibro,a.titulo,d.nombreAutor,b.idSucursal,c.nombreSucursal,b.numeroCopias
+	SELECT a.idLibro,a.titulo,d.nombreAutor,a.editorialNom,b.idSucursal,c.nombreSucursal,b.numeroCopias
 	FROM libro a
 	INNER JOIN copiasLibro b ON a.idLibro = b.idLibro
 	INNER JOIN sucursalBiblioteca c ON b.idSucursal = c.idSucursal
     INNER JOIN autoresLibro d ON d.idLibro = a.idLibro;
-    
+
+CREATE OR REPLACE VIEW librosEnPrestamoVista AS
+	SELECT a.numTarjeta,e.nombre,a.idLibro,b.titulo,c.nombreAutor,a.idSucursal,d.nombreSucursal
+	FROM prestamo a
+	INNER JOIN libro b ON a.idLibro = b.idLibro
+	INNER JOIN autoresLibro c ON a.idLibro = c.idLibro
+	INNER JOIN sucursalBiblioteca d ON a.idSucursal = d.idSucursal
+	INNER JOIN lector e ON a.numTarjeta = e.numTarjeta
+	INNER JOIN autoresLibro f ON a.idLibro = f.idLibro;
 /*Trigger*/
 /*Procedures*/
 DELIMITER //
-CREATE PROCEDURE nuevoPrestamo(IN libro INT,IN autor VARCHAR(60),IN sucursal INT,IN numLector INT)
+CREATE PROCEDURE nuevoPrestamo(IN libro INT,IN autor VARCHAR(60),IN sucursal INT,IN numLector INT,OUT estatusProc VARCHAR(70))
 BEGIN
-	DECLARE librosDisponibles INT;
+	DECLARE librosDisponibles,librosEnPrestamo INT;
     
     DECLARE exit handler for sqlexception
 	  BEGIN
 		GET DIAGNOSTICS CONDITION 1
-        @p1=RETURNED_SQLSTATE,@p2=MESSAGE_TEXT;
-        select @p1,@p2;
+        estatusProc = MESSAGE_TEXT;
+        SELECT estatusProc;
 	  ROLLBACK;
 	END;
 
 	DECLARE exit handler for sqlwarning
 	 BEGIN
 		GET DIAGNOSTICS CONDITION 1
-        @p1=RETURNED_SQLSTATE,@p2=MESSAGE_TEXT;
-        select @p1,@p2;
+        estatusProc = MESSAGE_TEXT;
+        SELECT estatusProc;
 	 ROLLBACK;
 	END;
     START TRANSACTION;
-    INSERT INTO `DBLibreria`.`prestamo` (`idLibro`,`idSucursal`,`numTarjeta`,`fechaSalida`,`fechaDevolucion`)
-    VALUES(libro,sucursal,numLector,curdate(),adddate(curdate(),INTERVAL 21 DAY));
-
-    /*Obtenemos el número de libros disponibles*/
-    /*SELECT numeroCopias INTO librosDisponibles 
-    FROM librosDisponiblesVista
-	WHERE idLibro=libro and idSucursal=sucursal and nombreAutor=autor;
-    /*Verificamos la disponibilidad*/
-    /*IF librosDisponibles=0 THEN 
-		INSERT INTO `DBLibreria`.`sucursalBiblioteca`
-		(`idSucursal`,
-		`nombreSucursal`,
-		`direccion`)
-		VALUES
-		();
-    END IF;*/
+		/*Obtenemos el número de libros disponibles*/
+		SELECT numeroCopias INTO librosDisponibles 
+		FROM librosDisponiblesVista
+		WHERE idLibro=libro and idSucursal=sucursal and nombreAutor=autor;
+        SELECT librosDisponibles;
+        /*Obtenemos el número de copias que tiene del libro*/
+        SELECT COUNT(b.idLibro) into librosEnPrestamo
+		FROM lector a
+		LEFT JOIN librosEnPrestamoVista b ON a.numTarjeta = b.numTarjeta
+        WHERE a.numTarjeta = numLector
+		GROUP BY a.numTarjeta;
+		/*Verificamos la disponibilidad*/
+		IF librosDisponibles>0 AND librosEnPrestamo<4 THEN 
+			INSERT INTO `DBLibreria`.`prestamo` (`idLibro`,`idSucursal`,`numTarjeta`,`fechaSalida`,`fechaDevolucion`)
+			VALUES(libro,sucursal,numLector,curdate(),adddate(curdate(),INTERVAL 21 DAY));
+            SET estatusProc='Se ingreso correctamente el prestamo';
+		ELSEIF librosDisponibles=0 THEN
+            SET estatusProc='No hay copias suficientes para realizar el prestamo';
+		ELSEIF librosEnPrestamo >=4 THEN
+			SET estatusProc='No puedes hacer mas prestamos';
+		END IF;
     COMMIT;
     #SELECT librosDisponibles;
 END //
 DELIMITER ;
-/*Para invocar al procedure*/
-#call nuevoPrestamo(2,'Dan Brown',2,1);
-#call nuevoPrestamo(3,'Patrick Suskind',2,1);
+#Triggers
+DELIMITER $$
+CREATE TRIGGER actualizaDisp 
+	AFTER INSERT ON prestamo FOR EACH ROW
+BEGIN
+	UPDATE copiasLibro set numeroCopias=numeroCopias-1 WHERE idLibro=NEW.idLibro AND idSucursal=NEW.idSucursal; 
+END$$
+DELIMITER ;
+/**/
+DELIMITER $$
+CREATE TRIGGER devolucion
+	AFTER DELETE ON prestamo FOR EACH ROW
+BEGIN
+	UPDATE copiasLibro set numeroCopias=numeroCopias+1 WHERE idLibro=OLD.idLibro AND idSucursal=OLD.idSucursal; 
+END$$
+DELIMITER ;
