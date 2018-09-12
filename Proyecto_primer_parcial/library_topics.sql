@@ -57,28 +57,28 @@ INSERT INTO `DBLibreria`.`editorial`
 `direccion`,
 `telefono`)
 VALUES
-('Acantilado','Blas Pascal 44, Colonia: Polanco','12-33-25-46-30');
-
-INSERT INTO `DBLibreria`.`editorial`
-(`editorialNom`,
-`direccion`,
-`telefono`)
-VALUES
-('Alamdia','Nativitas 44, Colonia: Laguna del volcan','49-34-56-53-11');
-
-INSERT INTO `DBLibreria`.`editorial`
-(`editorialNom`,
-`direccion`,
-`telefono`)
-VALUES
-('Alfaguara','Concepcio Ortega 18, Colonia: Pensador Mexicao','42-15-17-02');
-
-INSERT INTO `DBLibreria`.`editorial`
-(`editorialNom`,
-`direccion`,
-`telefono`)
-VALUES
-('Nevsky','Vince Cuackford 125, Colonia: Lancaster','10-03-11-11-21');
+('Acantilado','Blas Pascal 44, Colonia: Polanco','1233254630'),
+('Ariel',' CALLE AGUSTIN LARA NO. 69-B COL. EX-NORMAL TUXTEPEC ','8652983143'),
+('Alianza',' AV. INDEPENDENCIA NO. 241 COL.CENTRO','6949512401'),
+('Síntesis','CARRETERA A LOMA ALTA S/N Agraria','7928443425'),
+('Santillana','CALLE ZARAGOZA NO. 1010 Agua Blanca Industrial','8110465074'),
+('Cívitas','CALLE MATAMOROS NO. 310 Zoquipan','8298929289'),
+('McGraw-Hill','BLVD. BENITO JUAREZ NO. 1466-A Zona Industrial','6913368103'),
+('Siglo XXI','CALLE MATAMOROS NO.280 Tonala','7833744080'),
+('Springer','Plaza Conceptuàssim casquessin desbrocara, 102 13ºG  Benito Juárez','6803878495'),
+('Cátedra','Callejón Mocaràs, 250B 13ºG Belisario Domínguez ','8619828681'),
+('Aranzadi',' Cañada , 243A Barrio Analco','7686246615'),
+('CSIC','Pasaje Crispàrem enforinyo, 291 Barrio Alto ','670881557'),
+('Pirámide','Urbanización Traspunxésseu, 65 16ºG Barrio Nuevo Santa Cruz','8355297673'),
+('Crítica','Ronda Mis esblamant exhibeixi, 25 Alamedas de Tesistán','6823132579'),
+('Trotta','Av. Cedro, 12B 10ºB Alemeda','667469290'),
+('Paidós','Balcones del Cuatro Balcones de Oblatos','7684779204'),
+('Bosch','Cuesta Rastrejos, 153B 9ºH Zona Oblatos','6726019483'),
+('Marcial Pons','Glorieta Enrajolassis Cruz del Sur','7329738576'),
+('Tecnos',' AV. INDEPENDENCIA NO. 779 LOMAS DEL PEDREGAL ','8767954727'),
+('Alamdia','Nativitas 44, Colonia: Laguna del volcan','4934565311'),
+('Alfaguara','Concepcio Ortega 18, Colonia: Pensador Mexicao','42151702'),
+('Nevsky','Vince Cuackford 125, Colonia: Lancaster','1003111121');
 /*Querys inserción de Libros*/
 INSERT INTO `DBLibreria`.`libro`
 (`idLibro`,
