@@ -146,7 +146,7 @@ public class BibliotecaEliminar extends javax.swing.JPanel {
             preparedStatement.setString(1, biblio);
             preparedStatement.execute();
             mensaje.setText("Se elimino la biblioteca " + biblio);
-
+            listaEditoriales();
         } catch (SQLException ex) {
             Logger.getLogger(BibliotecaEliminar.class.getName()).log(Level.SEVERE, null, ex);
         }
