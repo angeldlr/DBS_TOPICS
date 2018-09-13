@@ -17,12 +17,13 @@ import java.sql.SQLException;
  */
 public class Conexion {
     public static Connection crearConexion() throws SQLException{
-        String url = "jdbc:mysql://localhost:3306/";
+        String url = "jdbc:mysql://localhost:3306/DBLibreria?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        //String url = "jdbc:mysql://localhost:3306/";
         String esquema = "DBLibreria";
         String usuario = "bases";
         String password = "escom";
         
-        Connection connection = DriverManager.getConnection(url + esquema, usuario, password);
+        Connection connection = DriverManager.getConnection(url , usuario, password);
         return connection;
     }
 }
