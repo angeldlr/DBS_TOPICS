@@ -57,19 +57,25 @@ public class Editorial extends javax.swing.JPanel {
         jLabel1.setText("Nombre:");
         jPanel2.add(jLabel1);
 
-        nombre.setText("jTextField1");
+        nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreActionPerformed(evt);
+            }
+        });
         jPanel2.add(nombre);
 
         jLabel2.setText("Direccion:");
         jPanel2.add(jLabel2);
 
-        direccion.setText("jTextField2");
+        direccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                direccionActionPerformed(evt);
+            }
+        });
         jPanel2.add(direccion);
 
         jLabel3.setText("Telefono:");
         jPanel2.add(jLabel3);
-
-        telefono.setText("jTextField3");
         jPanel2.add(telefono);
 
         add(jPanel2, java.awt.BorderLayout.NORTH);
@@ -122,10 +128,11 @@ public class Editorial extends javax.swing.JPanel {
                 preparedStatement.setString(2, direccion.getText());
                 preparedStatement.setInt(3, Integer.valueOf(telefono.getText()));
                 preparedStatement.execute();
-                estado.setText("termino query");
+                estado.setText(nombre.getText() + " dado de alta con exito");
                         
             } catch (SQLException ex) {
                 Logger.getLogger(Editorial.class.getName()).log(Level.SEVERE, null, ex);
+                estado.setText(ex.getMessage());
             } 
                 
                     //resultSet.close();
@@ -138,6 +145,14 @@ public class Editorial extends javax.swing.JPanel {
             estado.setText("uno de los campos requeridos esta vacio");
         }
     }//GEN-LAST:event_AltaEditorialMouseClicked
+
+    private void direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_direccionActionPerformed
+
+    private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

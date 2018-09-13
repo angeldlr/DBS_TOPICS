@@ -5,6 +5,15 @@
  */
 package mx.ipn.dbst.ui;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author hector
@@ -16,6 +25,33 @@ public class Libro extends javax.swing.JPanel {
      */
     public Libro() {
         initComponents();
+        listaEditoriales();
+        
+    }
+
+    private void listaEditoriales() {
+        if (titulo.getText().length() > 0) {
+            Connection connection = null;
+            ResultSet resultSet = null;
+            Statement statement = null;
+            String resultados = new String();
+
+            try {
+                connection = Conexion.crearConexion();
+                statement = connection.createStatement();
+                resultSet = statement.executeQuery("SELECT editorialNom FROM editorial");
+                System.out.println("consulta");
+                while (resultSet.next()) {
+                    resultados += resultSet.getString("editorialNom") + ", ";
+                    System.out.println("resultados");
+                }
+                editorial.setModel(new DefaultComboBoxModel(resultados.split(", ")));
+                //Conexion.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
 
     /**
@@ -29,12 +65,12 @@ public class Libro extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        titulo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        editorial = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        AltaLibro = new javax.swing.JButton();
+        estado = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -44,25 +80,23 @@ public class Libro extends javax.swing.JPanel {
         jLabel1.setText("Titulo:");
         jPanel2.add(jLabel1);
 
-        jTextField1.setText("jTextField1");
-        jPanel2.add(jTextField1);
+        titulo.setText("libro");
+        jPanel2.add(titulo);
 
         jLabel2.setText("Editorial:");
         jPanel2.add(jLabel2);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        editorial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        editorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                editorialActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboBox1);
+        jPanel2.add(editorial);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        jButton1.setText("jButton1");
-
-        jLabel3.setText("jLabel3");
+        AltaLibro.setText("Dar de alta libro");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -70,9 +104,9 @@ public class Libro extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(estado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                .addComponent(AltaLibro)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -80,27 +114,27 @@ public class Libro extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel3))
+                    .addComponent(AltaLibro)
+                    .addComponent(estado))
                 .addContainerGap(154, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void editorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editorialActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_editorialActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton AltaLibro;
+    private javax.swing.JComboBox<String> editorial;
+    private javax.swing.JLabel estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField titulo;
     // End of variables declaration//GEN-END:variables
 }
