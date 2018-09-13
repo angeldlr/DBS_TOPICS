@@ -42,14 +42,21 @@ public class mainView extends javax.swing.JFrame {
         JMenuItem Prestamo = new JMenuItem("Realizar prestamo");
         JMenuItem Devolucion = new JMenuItem("Realizar devolución");
         JMenuItem ConsultaPrestamos = new JMenuItem("Consultar prestamos");
+        /*Menu items lector*/
+        JMenuItem ConsultaLector = new JMenuItem("CRUD lector");
+        
         
         Editorial.setActionCommand("E");
         Autor.setActionCommand("A");
         Libro.setActionCommand("L");
         Biblioteca.setActionCommand("B");
+        /*action comands prestamo*/
         Prestamo.setActionCommand("P");
         Devolucion.setActionCommand("D");
         ConsultaPrestamos.setActionCommand("CP");
+        /*action comands lector*/
+        ConsultaLector.setActionCommand("LEC");
+        
         
         Editorial.setMnemonic(KeyEvent.VK_E);
         Autor.setMnemonic(KeyEvent.VK_A);
@@ -63,6 +70,8 @@ public class mainView extends javax.swing.JFrame {
         Prestamo.addActionListener(new ListenerMenus());
         Devolucion.addActionListener(new ListenerMenus());
         ConsultaPrestamos.addActionListener(new ListenerMenus());
+        ConsultaLector.addActionListener(new ListenerMenus());
+       
                 
         jMenu3.setMnemonic(KeyEvent.VK_A);
         jMenu3.add(Editorial);
@@ -73,14 +82,16 @@ public class mainView extends javax.swing.JFrame {
         menPrestamos.add(Prestamo);
         menPrestamos.add(Devolucion);
         menPrestamos.add(ConsultaPrestamos);
+        
+        menLector.add(ConsultaLector);
+        
     }
-    
     class ListenerMenus implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
             String opcion = e.getActionCommand();
-            //System.out.println(opcion);
+            System.out.println(opcion);
             JPanel panel = null;
             switch(opcion){
                 case "E":                    
@@ -107,6 +118,9 @@ public class mainView extends javax.swing.JFrame {
                     MostrarPrestamosView cp = new MostrarPrestamosView();
                     cp.setVisible(true);
                     break;
+                case "LEC":
+                    panel = new LectorPanel();
+                    break;    
                     
             }
             getContentPane().removeAll();
@@ -132,8 +146,10 @@ public class mainView extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         menPrestamos = new javax.swing.JMenu();
+        menLector = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("LIBRERIA DBST");
         getContentPane().setLayout(new java.awt.BorderLayout(20, 20));
 
         gif.setText("jLabel1");
@@ -165,6 +181,9 @@ public class mainView extends javax.swing.JFrame {
 
         menPrestamos.setText("Prestamos");
         MenuBar.add(menPrestamos);
+
+        menLector.setText("Lectores");
+        MenuBar.add(menLector);
 
         setJMenuBar(MenuBar);
         MenuBar.getAccessibleContext().setAccessibleName("menuBar");
@@ -198,6 +217,7 @@ public class mainView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(mainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
         
         Conexion a = new Conexion();
         try {
@@ -219,6 +239,7 @@ public class mainView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenu menLector;
     private javax.swing.JMenu menPrestamos;
     // End of variables declaration//GEN-END:variables
 }
