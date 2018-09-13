@@ -41,9 +41,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="titulo">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="libro"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -83,7 +80,9 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="estado" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="250" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="mensaje" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="244" max="32767" attributes="0"/>
                   <Component id="AltaLibro" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -96,6 +95,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="AltaLibro" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="estado" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="mensaje" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="154" max="32767" attributes="0"/>
               </Group>
@@ -107,8 +107,13 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Dar de alta libro"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AltaLibroMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="estado">
+        </Component>
+        <Component class="javax.swing.JLabel" name="mensaje">
         </Component>
       </SubComponents>
     </Container>
