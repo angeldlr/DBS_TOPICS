@@ -26,30 +26,50 @@ public class LibroBaja extends javax.swing.JPanel {
      */
     public LibroBaja() {
         initComponents();
-        listaEditoriales();
-        
+        listaLibros();
+        //listaEditoriales();
+
     }
 
     private void listaEditoriales() {
-            Connection connection = null;
-            ResultSet resultSet = null;
-            Statement statement = null;
-            String resultados = new String();
+        Connection connection = null;
+        ResultSet resultSet = null;
+        Statement statement = null;
+        String resultados = new String("Seleccione un libro, ");
 
-            try {
-                connection = Conexion.crearConexion();
-                statement = connection.createStatement();
-                resultSet = statement.executeQuery("SELECT editorialNom FROM editorial");
-                while (resultSet.next()) {
-                    resultados += resultSet.getString("editorialNom") + ", ";
-                }
-                editorial.setModel(new DefaultComboBoxModel(resultados.split(", ")));
-                //Conexion.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(LibroBaja.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            connection = Conexion.crearConexion();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT editorialNom FROM editorial");
+            while (resultSet.next()) {
+                resultados += resultSet.getString("editorialNom") + ", ";
             }
+            titulo.setModel(new DefaultComboBoxModel(resultados.split(", ")));
+            //Conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LibroBaja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-        
+    private void listaLibros() {
+        Connection connection = null;
+        ResultSet resultSet = null;
+        Statement statement = null;
+        String resultados = new String();
+
+        try {
+            connection = Conexion.crearConexion();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT titulo FROM libro");
+            while (resultSet.next()) {
+                resultados += resultSet.getString("titulo") + ", ";
+            }
+            titulo.setModel(new DefaultComboBoxModel(resultados.split(", ")));
+            editorial.setEnabled(true);
+            //Conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(LibroBaja.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -63,40 +83,42 @@ public class LibroBaja extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        titulo = new javax.swing.JTextField();
+        titulo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         editorial = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
-        AltaLibro = new javax.swing.JButton();
+        libroBaja = new javax.swing.JButton();
         estado = new javax.swing.JLabel();
         mensaje = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Libro"));
-        jPanel2.setLayout(new java.awt.GridLayout(3, 2));
+        jPanel2.setLayout(new java.awt.GridLayout(2, 2));
 
         jLabel1.setText("Titulo:");
         jPanel2.add(jLabel1);
+
+        titulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        titulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tituloActionPerformed(evt);
+            }
+        });
         jPanel2.add(titulo);
 
         jLabel2.setText("Editorial:");
         jPanel2.add(jLabel2);
 
-        editorial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        editorial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editorialActionPerformed(evt);
-            }
-        });
+        editorial.setEnabled(false);
         jPanel2.add(editorial);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        AltaLibro.setText("Dar de alta libro");
-        AltaLibro.addMouseListener(new java.awt.event.MouseAdapter() {
+        libroBaja.setText("Dar de alta libro");
+        libroBaja.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AltaLibroMouseClicked(evt);
+                libroBajaMouseClicked(evt);
             }
         });
 
@@ -110,7 +132,7 @@ public class LibroBaja extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mensaje)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
-                .addComponent(AltaLibro)
+                .addComponent(libroBaja)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -118,54 +140,33 @@ public class LibroBaja extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AltaLibro)
+                    .addComponent(libroBaja)
                     .addComponent(estado)
                     .addComponent(mensaje))
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void editorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editorialActionPerformed
+    private void tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_editorialActionPerformed
+    }//GEN-LAST:event_tituloActionPerformed
 
-    private void AltaLibroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AltaLibroMouseClicked
-        Connection connection = null;            
-        ResultSet resultSet = null;
-        PreparedStatement preparedStatement;
-        String query;
-        
-        if(titulo.getText().length() > 0){
-            try {
-                connection = Conexion.crearConexion();
-                query = "INSERT INTO libro(titulo,editorialNom) VALUES (?,?)";
-                preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, titulo.getText());
-                preparedStatement.setString(2, editorial.getSelectedItem().toString());
-                preparedStatement.execute();
-                mensaje.setText("se da de alta: " + titulo.getText() 
-                        + "en editorial " 
-                        + editorial.getSelectedItem().toString());
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(LibroBaja.class.getName()).log(Level.SEVERE, null, ex);
-                mensaje.setText(ex.getMessage());
-            }
-        }
-    }//GEN-LAST:event_AltaLibroMouseClicked
+    private void libroBajaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_libroBajaMouseClicked
+       
+    }//GEN-LAST:event_libroBajaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AltaLibro;
     private javax.swing.JComboBox<String> editorial;
     private javax.swing.JLabel estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton libroBaja;
     private javax.swing.JLabel mensaje;
-    private javax.swing.JTextField titulo;
+    private javax.swing.JComboBox<String> titulo;
     // End of variables declaration//GEN-END:variables
 }

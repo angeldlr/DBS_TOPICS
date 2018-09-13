@@ -37,7 +37,8 @@ public class mainView extends javax.swing.JFrame {
     private void iniciaMenuBar(){
         JMenuItem Editorial = new JMenuItem("Editorial");
         JMenuItem Autor = new JMenuItem("Autor");
-        JMenuItem Libro = new JMenuItem("Libro");
+        JMenuItem LibroAlta = new JMenuItem("Libro");
+        JMenuItem LibroBaja = new JMenuItem("Libro");
         JMenuItem Biblioteca = new JMenuItem("Biblioteca");
         JMenuItem Prestamo = new JMenuItem("Realizar prestamo");
         JMenuItem Devolucion = new JMenuItem("Realizar devolución");
@@ -49,8 +50,10 @@ public class mainView extends javax.swing.JFrame {
         
         Editorial.setActionCommand("E");
         Autor.setActionCommand("A");
-        Libro.setActionCommand("L");
+        LibroAlta.setActionCommand("LA");
+        LibroBaja.setActionCommand("LB");
         Biblioteca.setActionCommand("B");
+        
         /*action comands prestamo*/
         Prestamo.setActionCommand("P");
         Devolucion.setActionCommand("D");
@@ -61,12 +64,14 @@ public class mainView extends javax.swing.JFrame {
         
         Editorial.setMnemonic(KeyEvent.VK_E);
         Autor.setMnemonic(KeyEvent.VK_A);
-        Libro.setMnemonic(KeyEvent.VK_L);
+        LibroAlta.setMnemonic(KeyEvent.VK_L);
+        LibroBaja.setMnemonic(KeyEvent.VK_L);
         Biblioteca.setMnemonic(KeyEvent.VK_B);
         
         Editorial.addActionListener(new ListenerMenus());
         Autor.addActionListener(new ListenerMenus());
-        Libro.addActionListener(new ListenerMenus());
+        LibroAlta.addActionListener(new ListenerMenus());
+        LibroBaja.addActionListener(new ListenerMenus());
         Biblioteca.addActionListener(new ListenerMenus());
         Prestamo.addActionListener(new ListenerMenus());
         Devolucion.addActionListener(new ListenerMenus());
@@ -77,8 +82,10 @@ public class mainView extends javax.swing.JFrame {
         Altas.setMnemonic(KeyEvent.VK_A);
         Altas.add(Editorial);
         Altas.add(Autor);
-        Altas.add(Libro);
+        Altas.add(LibroAlta);
         Altas.add(Biblioteca);   
+        
+        bajas.add(LibroBaja);
         
         menPrestamos.add(Prestamo);
         menPrestamos.add(Devolucion);
@@ -98,8 +105,11 @@ public class mainView extends javax.swing.JFrame {
                 case "E":                    
                     panel = new Editorial();
                     break;
-                case "L":
+                case "LA":
                     panel = new LibroAlta();
+                    break;
+                case "LB":
+                    panel = new LibroBaja();
                     break;
                 case "A":
                     panel = new Autor();
@@ -145,7 +155,7 @@ public class mainView extends javax.swing.JFrame {
         gif = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         Altas = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        bajas = new javax.swing.JMenu();
         menPrestamos = new javax.swing.JMenu();
         menLector = new javax.swing.JMenu();
 
@@ -177,8 +187,8 @@ public class mainView extends javax.swing.JFrame {
         Altas.setText("altas");
         MenuBar.add(Altas);
 
-        jMenu4.setText("Bajas");
-        MenuBar.add(jMenu4);
+        bajas.setText("Bajas");
+        MenuBar.add(bajas);
 
         menPrestamos.setText("Prestamos");
         MenuBar.add(menPrestamos);
@@ -237,8 +247,8 @@ public class mainView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Altas;
     private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JMenu bajas;
     private javax.swing.JLabel gif;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu menLector;
     private javax.swing.JMenu menPrestamos;

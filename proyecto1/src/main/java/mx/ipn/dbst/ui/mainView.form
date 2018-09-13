@@ -12,7 +12,7 @@
             <Property name="text" type="java.lang.String" value="altas"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu4">
+        <Menu class="javax.swing.JMenu" name="bajas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Bajas"/>
           </Properties>
