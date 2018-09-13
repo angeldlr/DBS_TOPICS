@@ -19,12 +19,12 @@ import javax.swing.JComboBox;
  *
  * @author hector
  */
-public class Libro extends javax.swing.JPanel {
+public class LibroAlta extends javax.swing.JPanel {
 
     /**
      * Creates new form Libro
      */
-    public Libro() {
+    public LibroAlta() {
         initComponents();
         listaEditoriales();
         
@@ -46,7 +46,7 @@ public class Libro extends javax.swing.JPanel {
                 editorial.setModel(new DefaultComboBoxModel(resultados.split(", ")));
                 //Conexion.close();
             } catch (SQLException ex) {
-                Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LibroAlta.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         
@@ -150,7 +150,7 @@ public class Libro extends javax.swing.JPanel {
                         + editorial.getSelectedItem().toString());
                 
             } catch (SQLException ex) {
-                Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LibroAlta.class.getName()).log(Level.SEVERE, null, ex);
                 mensaje.setText(ex.getMessage());
             }
         }

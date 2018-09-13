@@ -44,7 +44,7 @@ public class Autor extends javax.swing.JPanel {
                 libros.setModel(new DefaultComboBoxModel(resultados.split(", ")));
                 //Conexion.close();
             } catch (SQLException ex) {
-                Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LibroAlta.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         
@@ -178,7 +178,7 @@ public class Autor extends javax.swing.JPanel {
                 mensaje.setText("se da de alta: " + nombre.getText());
                 
             } catch (SQLException ex) {
-                Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LibroAlta.class.getName()).log(Level.SEVERE, null, ex);
                 mensaje.setText(ex.getMessage());
             }
         }

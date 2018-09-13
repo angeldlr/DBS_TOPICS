@@ -98,7 +98,7 @@ public class mainView extends javax.swing.JFrame {
                     panel = new Editorial();
                     break;
                 case "L":
-                    panel = new Libro();
+                    panel = new LibroAlta();
                     break;
                 case "A":
                     panel = new Autor();
@@ -202,7 +202,7 @@ public class mainView extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("GTK+".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
