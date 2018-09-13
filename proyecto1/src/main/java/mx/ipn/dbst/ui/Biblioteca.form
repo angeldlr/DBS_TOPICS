@@ -41,9 +41,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="texFieldNomSuc">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="texFieldNomSucActionPerformed"/>
           </Events>
@@ -54,9 +51,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textFieldDireccion">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>

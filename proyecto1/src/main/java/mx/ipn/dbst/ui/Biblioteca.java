@@ -50,7 +50,6 @@ public class Biblioteca extends javax.swing.JPanel {
         jLabel1.setText("Nombre sucursal: ");
         jPanel2.add(jLabel1);
 
-        texFieldNomSuc.setText("jTextField1");
         texFieldNomSuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 texFieldNomSucActionPerformed(evt);
@@ -60,8 +59,6 @@ public class Biblioteca extends javax.swing.JPanel {
 
         jLabel2.setText("Direccion:");
         jPanel2.add(jLabel2);
-
-        textFieldDireccion.setText("jTextField2");
         jPanel2.add(textFieldDireccion);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
@@ -119,7 +116,7 @@ public class Biblioteca extends javax.swing.JPanel {
                 preparedStatement.setString(1,texFieldNomSuc.getText());
                 preparedStatement.setString(2,textFieldDireccion.getText());
                 preparedStatement.execute();
-                mensaje.setText("La Bibioteca "+ texFieldNomSuc.getText());
+                mensaje.setText("La sucursal  "+ texFieldNomSuc.getText()+ " fue dada de alta en el sistema ...");
             } catch (SQLException ex) {
                 Logger.getLogger(Biblioteca.class.getName()).log(Level.SEVERE, null, ex);
             }

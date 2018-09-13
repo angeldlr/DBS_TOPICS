@@ -43,7 +43,7 @@ public class mainView extends javax.swing.JFrame {
         JMenuItem Prestamo = new JMenuItem("Realizar prestamo");
         JMenuItem Devolucion = new JMenuItem("Realizar devolución");
         JMenuItem ConsultaPrestamos = new JMenuItem("Consultar prestamos");
-
+        JMenuItem eliminarBiblioteca = new JMenuItem("Biblioteca");
         /*Menu items lector*/
         JMenuItem ConsultaLector = new JMenuItem("CRUD lector");
         
@@ -53,7 +53,7 @@ public class mainView extends javax.swing.JFrame {
         LibroAlta.setActionCommand("LA");
         LibroBaja.setActionCommand("LB");
         Biblioteca.setActionCommand("B");
-        
+        eliminarBiblioteca.setActionCommand("EB");
         /*action comands prestamo*/
         Prestamo.setActionCommand("P");
         Devolucion.setActionCommand("D");
@@ -67,12 +67,13 @@ public class mainView extends javax.swing.JFrame {
         LibroAlta.setMnemonic(KeyEvent.VK_L);
         LibroBaja.setMnemonic(KeyEvent.VK_L);
         Biblioteca.setMnemonic(KeyEvent.VK_B);
-        
+        eliminarBiblioteca.setMnemonic(KeyEvent.VK_B);
         Editorial.addActionListener(new ListenerMenus());
         Autor.addActionListener(new ListenerMenus());
         LibroAlta.addActionListener(new ListenerMenus());
         LibroBaja.addActionListener(new ListenerMenus());
         Biblioteca.addActionListener(new ListenerMenus());
+        eliminarBiblioteca.addActionListener(new ListenerMenus());
         Prestamo.addActionListener(new ListenerMenus());
         Devolucion.addActionListener(new ListenerMenus());
         ConsultaPrestamos.addActionListener(new ListenerMenus());
@@ -86,6 +87,7 @@ public class mainView extends javax.swing.JFrame {
         Altas.add(Biblioteca);   
         
         bajas.add(LibroBaja);
+        bajas.add(eliminarBiblioteca);
         
         menPrestamos.add(Prestamo);
         menPrestamos.add(Devolucion);
@@ -116,6 +118,9 @@ public class mainView extends javax.swing.JFrame {
                     break;
                 case "B":
                     panel = new Biblioteca();
+                    break;
+                case "EB":
+                    panel = new BibliotecaEliminar();
                     break;
                 case "P":
                     RealizarPrestamoView pv = new RealizarPrestamoView();
