@@ -7,9 +7,9 @@
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="menuBar"/>
       </AccessibilityProperties>
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="Altas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Altas"/>
+            <Property name="text" type="java.lang.String" value="altas"/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu4">

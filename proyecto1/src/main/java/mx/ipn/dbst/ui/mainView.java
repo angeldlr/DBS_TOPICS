@@ -74,11 +74,11 @@ public class mainView extends javax.swing.JFrame {
         ConsultaLector.addActionListener(new ListenerMenus());
        
                 
-        jMenu3.setMnemonic(KeyEvent.VK_A);
-        jMenu3.add(Editorial);
-        jMenu3.add(Autor);
-        jMenu3.add(Libro);
-        jMenu3.add(Biblioteca);   
+        Altas.setMnemonic(KeyEvent.VK_A);
+        Altas.add(Editorial);
+        Altas.add(Autor);
+        Altas.add(Libro);
+        Altas.add(Biblioteca);   
         
         menPrestamos.add(Prestamo);
         menPrestamos.add(Devolucion);
@@ -144,7 +144,7 @@ public class mainView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         gif = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
-        jMenu3 = new javax.swing.JMenu();
+        Altas = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         menPrestamos = new javax.swing.JMenu();
         menLector = new javax.swing.JMenu();
@@ -152,6 +152,8 @@ public class mainView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LIBRERIA DBST");
         getContentPane().setLayout(new java.awt.BorderLayout(20, 20));
+
+        gif.setText("jLabel1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,10 +174,13 @@ public class mainView extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        MenuBar.add(jMenu3);
+        Altas.setText("altas");
+        MenuBar.add(Altas);
 
+        jMenu4.setText("Bajas");
         MenuBar.add(jMenu4);
 
+        menPrestamos.setText("Prestamos");
         MenuBar.add(menPrestamos);
 
         menLector.setText("Lectores");
@@ -230,9 +235,9 @@ public class mainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Altas;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JLabel gif;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu menLector;
