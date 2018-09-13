@@ -46,7 +46,6 @@ public class mainView extends javax.swing.JFrame {
         btnDevolucion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("LIBRERIA DBST");
         setPreferredSize(new java.awt.Dimension(1080, 600));
 
         javax.swing.GroupLayout panelLibrosLayout = new javax.swing.GroupLayout(panelLibros);
@@ -88,14 +87,12 @@ public class mainView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("LECTORES", panelLectores);
 
-        btnPrestamo.setText("Realizar prestamo");
         btnPrestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrestamoActionPerformed(evt);
             }
         });
 
-        btnVPrestamos.setText("Ver prestamos");
         btnVPrestamos.setMaximumSize(new java.awt.Dimension(140, 27));
         btnVPrestamos.setMinimumSize(new java.awt.Dimension(140, 27));
         btnVPrestamos.setPreferredSize(new java.awt.Dimension(140, 27));
@@ -105,7 +102,6 @@ public class mainView extends javax.swing.JFrame {
             }
         });
 
-        btnDevolucion.setText("Realizar devolución");
         btnDevolucion.setMaximumSize(new java.awt.Dimension(140, 27));
         btnDevolucion.setMinimumSize(new java.awt.Dimension(140, 27));
         btnDevolucion.setPreferredSize(new java.awt.Dimension(140, 27));
