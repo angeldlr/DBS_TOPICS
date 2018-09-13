@@ -42,6 +42,7 @@ public class mainView extends javax.swing.JFrame {
         JMenuItem Prestamo = new JMenuItem("Realizar prestamo");
         JMenuItem Devolucion = new JMenuItem("Realizar devolución");
         JMenuItem ConsultaPrestamos = new JMenuItem("Consultar prestamos");
+
         /*Menu items lector*/
         JMenuItem ConsultaLector = new JMenuItem("CRUD lector");
         
@@ -152,34 +153,29 @@ public class mainView extends javax.swing.JFrame {
         setTitle("LIBRERIA DBST");
         getContentPane().setLayout(new java.awt.BorderLayout(20, 20));
 
-        gif.setText("jLabel1");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(172, 172, 172)
+                .addGap(176, 176, 176)
                 .addComponent(gif)
-                .addContainerGap(242, Short.MAX_VALUE))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(144, 144, 144)
+                .addGap(65, 65, 65)
                 .addComponent(gif)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jMenu3.setText("Altas");
         MenuBar.add(jMenu3);
 
-        jMenu4.setText("Bajas");
         MenuBar.add(jMenu4);
 
-        menPrestamos.setText("Prestamos");
         MenuBar.add(menPrestamos);
 
         menLector.setText("Lectores");

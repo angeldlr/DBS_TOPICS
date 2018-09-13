@@ -4,10 +4,16 @@
  * and open the template in the editor.
  */
 package mx.ipn.dbst.ui;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
- * @author hector
+ * @author el pasito
  */
 public class Biblioteca extends javax.swing.JPanel {
 
@@ -29,51 +35,109 @@ public class Biblioteca extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        texFieldNomSuc = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        textFieldDireccion = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        mensaje = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Bibliteca"));
         jPanel2.setLayout(new java.awt.GridLayout(3, 2));
 
-        jLabel1.setText("Nombre sucursal: ");
         jPanel2.add(jLabel1);
 
-        jTextField1.setText("jTextField1");
-        jPanel2.add(jTextField1);
+        texFieldNomSuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                texFieldNomSucActionPerformed(evt);
+            }
+        });
+        jPanel2.add(texFieldNomSuc);
 
-        jLabel2.setText("Direccion:");
         jPanel2.add(jLabel2);
 
-        jTextField2.setText("jTextField2");
-        jPanel2.add(jTextField2);
+        jPanel2.add(textFieldDireccion);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                darAltaBiblioteca(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        mensaje.setText(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(mensaje)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 222, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(158, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(mensaje)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+    // Funcion que dara de alta la biblioteca
+    private void darAltaBiblioteca(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_darAltaBiblioteca
+        // validando que los campos no esten vacios
+        if( (texFieldNomSuc.getText().length() > 0
+            && textFieldDireccion.getText().length()>  0)){
+            try {
+                Connection connection = null;
+                connection = Conexion.crearConexion();
+                String query = "INSERT INTO sucursalBiblioteca(idSucursal,nombreSucursal,direccion) VALUES( ?,?,?) ";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(2,texFieldNomSuc.getText());
+                preparedStatement.setString(3,textFieldDireccion.getText());
+                preparedStatement.execute();
+                mensaje.setText("La Bibioteca "+ texFieldNomSuc.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(Biblioteca.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }else{ /// hay algun compo vacio
+            mensaje.setText("uno de los campos requeridos esta vacio.. ");
+            }
+    }//GEN-LAST:event_darAltaBiblioteca
+
+    private void texFieldNomSucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_texFieldNomSucActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_texFieldNomSucActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel mensaje;
+    private javax.swing.JTextField texFieldNomSuc;
+    private javax.swing.JTextField textFieldDireccion;
     // End of variables declaration//GEN-END:variables
 }
