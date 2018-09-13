@@ -35,16 +35,18 @@ public class LibroBaja extends javax.swing.JPanel {
         Connection connection = null;
         ResultSet resultSet = null;
         Statement statement = null;
-        String resultados = new String("Seleccione un libro, ");
-
+        String resultados = new String();
+        String query = new String("SELECT editorialNom FROM libro WHERE titulo=\"");
+        
         try {
             connection = Conexion.crearConexion();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT editorialNom FROM editorial");
+            query += titulo.getSelectedItem().toString() + "\"";
+            resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 resultados += resultSet.getString("editorialNom") + ", ";
             }
-            titulo.setModel(new DefaultComboBoxModel(resultados.split(", ")));
+            editorial.setModel(new DefaultComboBoxModel(resultados.split(", ")));
             //Conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(LibroBaja.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,6 +68,7 @@ public class LibroBaja extends javax.swing.JPanel {
             }
             titulo.setModel(new DefaultComboBoxModel(resultados.split(", ")));
             editorial.setEnabled(true);
+            listaEditoriales();
             //Conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(LibroBaja.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,7 +102,15 @@ public class LibroBaja extends javax.swing.JPanel {
         jLabel1.setText("Titulo:");
         jPanel2.add(jLabel1);
 
-        titulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        titulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione un libro" }));
+        titulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tituloMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tituloMousePressed(evt);
+            }
+        });
         titulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tituloActionPerformed(evt);
@@ -115,7 +126,7 @@ public class LibroBaja extends javax.swing.JPanel {
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        libroBaja.setText("Dar de alta libro");
+        libroBaja.setText("Dar de baja libro");
         libroBaja.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 libroBajaMouseClicked(evt);
@@ -131,7 +142,7 @@ public class LibroBaja extends javax.swing.JPanel {
                 .addComponent(estado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mensaje)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
                 .addComponent(libroBaja)
                 .addContainerGap())
         );
@@ -150,12 +161,43 @@ public class LibroBaja extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tituloActionPerformed
 
     private void libroBajaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_libroBajaMouseClicked
-       
+       Connection connection = null;            
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement;
+        String query;
+        
+        
+        
+        
+            try {
+                connection = Conexion.crearConexion();
+                query = "DELETE FROM libro WHERE titulo=?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, titulo.getSelectedItem().toString());
+                preparedStatement.execute();
+                mensaje.setText("se da de baja: " + titulo.getSelectedItem().toString()
+                        + "en editorial " 
+                        + editorial.getSelectedItem().toString());
+                listaLibros();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(LibroAlta.class.getName()).log(Level.SEVERE, null, ex);
+                mensaje.setText(ex.getMessage());
+            }
+        
     }//GEN-LAST:event_libroBajaMouseClicked
+
+    private void tituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tituloMouseClicked
+        //listaLibros();
+    }//GEN-LAST:event_tituloMouseClicked
+
+    private void tituloMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tituloMousePressed
+        //listaLibros();
+    }//GEN-LAST:event_tituloMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
