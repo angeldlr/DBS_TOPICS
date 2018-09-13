@@ -5,13 +5,6 @@
  */
 package mx.ipn.dbst.ui;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author hector
@@ -38,8 +31,6 @@ public class Autor extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        AltaAutor = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -49,81 +40,28 @@ public class Autor extends javax.swing.JPanel {
         jLabel1.setText("Nombre:");
         jPanel2.add(jLabel1);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        jTextField1.setText("jTextField1");
         jPanel2.add(jTextField1);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
-
-        AltaAutor.setText("Dar de alta");
-        AltaAutor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AltaAutorMouseClicked(evt);
-            }
-        });
-        AltaAutor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AltaAutorActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
-                .addComponent(AltaAutor)
-                .addContainerGap())
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AltaAutor)
-                    .addComponent(jLabel2))
-                .addContainerGap(210, Short.MAX_VALUE))
+            .addGap(0, 250, Short.MAX_VALUE)
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void AltaAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AltaAutorActionPerformed
-        
-    }//GEN-LAST:event_AltaAutorActionPerformed
-
-    private void AltaAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AltaAutorMouseClicked
-        Connection connection;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        
-        try {
-            connection = Conexion.crearConexion();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM directorio");
-        } catch (SQLException ex) {
-            Logger.getLogger(Autor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-    }//GEN-LAST:event_AltaAutorMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AltaAutor;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
