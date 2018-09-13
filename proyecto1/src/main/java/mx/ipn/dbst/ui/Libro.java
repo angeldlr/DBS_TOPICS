@@ -6,6 +6,7 @@
 package mx.ipn.dbst.ui;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,7 +31,6 @@ public class Libro extends javax.swing.JPanel {
     }
 
     private void listaEditoriales() {
-        if (titulo.getText().length() > 0) {
             Connection connection = null;
             ResultSet resultSet = null;
             Statement statement = null;
@@ -40,10 +40,8 @@ public class Libro extends javax.swing.JPanel {
                 connection = Conexion.crearConexion();
                 statement = connection.createStatement();
                 resultSet = statement.executeQuery("SELECT editorialNom FROM editorial");
-                System.out.println("consulta");
                 while (resultSet.next()) {
                     resultados += resultSet.getString("editorialNom") + ", ";
-                    System.out.println("resultados");
                 }
                 editorial.setModel(new DefaultComboBoxModel(resultados.split(", ")));
                 //Conexion.close();
@@ -51,7 +49,7 @@ public class Libro extends javax.swing.JPanel {
                 Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }
+        
     }
 
     /**
@@ -71,6 +69,7 @@ public class Libro extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         AltaLibro = new javax.swing.JButton();
         estado = new javax.swing.JLabel();
+        mensaje = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -79,8 +78,6 @@ public class Libro extends javax.swing.JPanel {
 
         jLabel1.setText("Titulo:");
         jPanel2.add(jLabel1);
-
-        titulo.setText("libro");
         jPanel2.add(titulo);
 
         jLabel2.setText("Editorial:");
@@ -97,6 +94,11 @@ public class Libro extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         AltaLibro.setText("Dar de alta libro");
+        AltaLibro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AltaLibroMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,7 +107,9 @@ public class Libro extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(estado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mensaje)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
                 .addComponent(AltaLibro)
                 .addContainerGap())
         );
@@ -115,7 +119,8 @@ public class Libro extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AltaLibro)
-                    .addComponent(estado))
+                    .addComponent(estado)
+                    .addComponent(mensaje))
                 .addContainerGap(154, Short.MAX_VALUE))
         );
 
@@ -126,6 +131,31 @@ public class Libro extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_editorialActionPerformed
 
+    private void AltaLibroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AltaLibroMouseClicked
+        Connection connection = null;            
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement;
+        String query;
+        
+        if(titulo.getText().length() > 0){
+            try {
+                connection = Conexion.crearConexion();
+                query = "INSERT INTO libro(titulo,editorialNom) VALUES (?,?)";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, titulo.getText());
+                preparedStatement.setString(2, editorial.getSelectedItem().toString());
+                preparedStatement.execute();
+                mensaje.setText("se da de alta: " + titulo.getText() 
+                        + "en editorial " 
+                        + editorial.getSelectedItem().toString());
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
+                mensaje.setText(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_AltaLibroMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AltaLibro;
@@ -135,6 +165,7 @@ public class Libro extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel mensaje;
     private javax.swing.JTextField titulo;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,15 @@
  */
 package mx.ipn.dbst.ui;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author hector
@@ -16,8 +25,31 @@ public class Autor extends javax.swing.JPanel {
      */
     public Autor() {
         initComponents();
+        listaLibros();
     }
 
+    private void listaLibros() {
+            Connection connection = null;
+            ResultSet resultSet = null;
+            Statement statement = null;
+            String resultados = new String();
+
+            try {
+                connection = Conexion.crearConexion();
+                statement = connection.createStatement();
+                resultSet = statement.executeQuery("SELECT titulo FROM libro");
+                while (resultSet.next()) {
+                    resultados += resultSet.getString("titulo") + ", ";
+                }
+                libros.setModel(new DefaultComboBoxModel(resultados.split(", ")));
+                //Conexion.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,41 +61,139 @@ public class Autor extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nombre = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        libros = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
+        alta = new javax.swing.JButton();
+        mensaje = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Autor"));
-        jPanel2.setLayout(new java.awt.GridLayout(1, 2));
+        jPanel2.setLayout(new java.awt.GridLayout(2, 2));
 
         jLabel1.setText("Nombre:");
         jPanel2.add(jLabel1);
+        jPanel2.add(nombre);
 
-        jTextField1.setText("jTextField1");
-        jPanel2.add(jTextField1);
+        jLabel2.setText("Libro:");
+        jPanel2.add(jLabel2);
+
+        libros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(libros);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
+        alta.setText("Dar de alta");
+        alta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                altaMouseClicked(evt);
+            }
+        });
+        alta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mensaje)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(alta)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(alta)
+                    .addComponent(mensaje))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void altaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_altaActionPerformed
+
+    private void altaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_altaMouseClicked
+        Connection connection = null;            
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement;
+        String query;
+        String aux = new String();
+        int idLibro;
+        
+        if(nombre.getText().length() > 0){
+            try {
+                connection = Conexion.crearConexion();
+                
+                query = "SELECT idLibro from libro where titulo=?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, libros.getSelectedItem().toString());
+                resultSet = preparedStatement.executeQuery();
+                while(resultSet.next()){
+                    aux += resultSet.getString("idLibro") + ", ";
+                }
+                
+                
+                
+                query = "INSERT INTO autoresLibro(idLibro,nombreAutor) VALUES (?,?)";
+                preparedStatement = connection.prepareStatement(query);
+                
+                for(String t : aux.split(", ")){
+                    preparedStatement.setInt(1, Integer.valueOf(t));
+                    preparedStatement.setString(2, nombre.getText());
+                    preparedStatement.execute();
+                }
+                
+                
+                
+                mensaje.setText("se da de alta: " + nombre.getText());
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
+                mensaje.setText(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_altaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton alta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JComboBox<String> libros;
+    private javax.swing.JLabel mensaje;
+    private javax.swing.JTextField nombre;
     // End of variables declaration//GEN-END:variables
 }
