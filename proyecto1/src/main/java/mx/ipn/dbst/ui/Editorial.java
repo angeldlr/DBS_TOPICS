@@ -5,14 +5,6 @@
  */
 package mx.ipn.dbst.ui;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author hector
@@ -37,14 +29,12 @@ public class Editorial extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        nombre = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        direccion = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        telefono = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        estado = new javax.swing.JLabel();
-        AltaEditorial = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(400, 300));
         setLayout(new java.awt.BorderLayout(10, 10));
@@ -57,99 +47,46 @@ public class Editorial extends javax.swing.JPanel {
         jLabel1.setText("Nombre:");
         jPanel2.add(jLabel1);
 
-        nombre.setText("jTextField1");
-        jPanel2.add(nombre);
+        jTextField1.setText("jTextField1");
+        jPanel2.add(jTextField1);
 
         jLabel2.setText("Direccion:");
         jPanel2.add(jLabel2);
 
-        direccion.setText("jTextField2");
-        jPanel2.add(direccion);
+        jTextField2.setText("jTextField2");
+        jPanel2.add(jTextField2);
 
         jLabel3.setText("Telefono:");
         jPanel2.add(jLabel3);
 
-        telefono.setText("jTextField3");
-        jPanel2.add(telefono);
+        jTextField3.setText("jTextField3");
+        jPanel2.add(jTextField3);
 
         add(jPanel2, java.awt.BorderLayout.NORTH);
-
-        AltaEditorial.setText("Dar de alta");
-        AltaEditorial.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AltaEditorialMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(estado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
-                .addComponent(AltaEditorial)
-                .addContainerGap())
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(estado)
-                    .addComponent(AltaEditorial))
-                .addGap(0, 155, Short.MAX_VALUE))
+            .addGap(0, 183, Short.MAX_VALUE)
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void AltaEditorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AltaEditorialMouseClicked
-        if ((nombre.getText().length() > 0)
-                && (direccion.getText().length() > 0)
-                && (telefono.getText().length() > 0)) {
-            Connection connection = null;
-            //Statement statement = null;
-            ResultSet resultSet = null;
-
-            try {
-                connection = Conexion.crearConexion();
-                //statement = connection.createStatement();
-                
-                String query = "INSERT INTO editorial(editorialNom,direccion,telefono) VALUES (?,?,?)";
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, nombre.getText());
-                preparedStatement.setString(2, direccion.getText());
-                preparedStatement.setInt(3, Integer.valueOf(telefono.getText()));
-                preparedStatement.execute();
-                estado.setText("termino query");
-                        
-            } catch (SQLException ex) {
-                Logger.getLogger(Editorial.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-                
-                    //resultSet.close();
-                    
-                    //connection.close();
-                
-            
-
-        } else {
-            estado.setText("uno de los campos requeridos esta vacio");
-        }
-    }//GEN-LAST:event_AltaEditorialMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AltaEditorial;
-    private javax.swing.JTextField direccion;
-    private javax.swing.JLabel estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField nombre;
-    private javax.swing.JTextField telefono;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

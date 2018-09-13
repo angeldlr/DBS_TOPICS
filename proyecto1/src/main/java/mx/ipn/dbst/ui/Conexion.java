@@ -22,8 +22,9 @@ public class Conexion {
         String esquema = "DBLibreria";
         String usuario = "bases";
         String password = "escom";
-        
+    
         Connection connection = DriverManager.getConnection(url , usuario, password);
         return connection;
+        
     }
 }

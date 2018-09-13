@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import mx.ipn.dbst.ui.prestamos.*;
 
 /**
  *
@@ -29,20 +30,26 @@ public class mainView extends javax.swing.JFrame {
      */
     public mainView() {
         initComponents();
+        setLocationRelativeTo(null);
         iniciaMenuBar();
     }
 
-    
     private void iniciaMenuBar(){
         JMenuItem Editorial = new JMenuItem("Editorial");
         JMenuItem Autor = new JMenuItem("Autor");
         JMenuItem Libro = new JMenuItem("Libro");
         JMenuItem Biblioteca = new JMenuItem("Biblioteca");
+        JMenuItem Prestamo = new JMenuItem("Realizar prestamo");
+        JMenuItem Devolucion = new JMenuItem("Realizar devolución");
+        JMenuItem ConsultaPrestamos = new JMenuItem("Consultar prestamos");
         
         Editorial.setActionCommand("E");
         Autor.setActionCommand("A");
         Libro.setActionCommand("L");
         Biblioteca.setActionCommand("B");
+        Prestamo.setActionCommand("P");
+        Devolucion.setActionCommand("D");
+        ConsultaPrestamos.setActionCommand("CP");
         
         Editorial.setMnemonic(KeyEvent.VK_E);
         Autor.setMnemonic(KeyEvent.VK_A);
@@ -53,12 +60,19 @@ public class mainView extends javax.swing.JFrame {
         Autor.addActionListener(new ListenerMenus());
         Libro.addActionListener(new ListenerMenus());
         Biblioteca.addActionListener(new ListenerMenus());
-        
+        Prestamo.addActionListener(new ListenerMenus());
+        Devolucion.addActionListener(new ListenerMenus());
+        ConsultaPrestamos.addActionListener(new ListenerMenus());
+                
         jMenu3.setMnemonic(KeyEvent.VK_A);
         jMenu3.add(Editorial);
         jMenu3.add(Autor);
         jMenu3.add(Libro);
         jMenu3.add(Biblioteca);   
+        
+        menPrestamos.add(Prestamo);
+        menPrestamos.add(Devolucion);
+        menPrestamos.add(ConsultaPrestamos);
     }
     
     class ListenerMenus implements ActionListener{
@@ -66,6 +80,7 @@ public class mainView extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             String opcion = e.getActionCommand();
+            //System.out.println(opcion);
             JPanel panel = null;
             switch(opcion){
                 case "E":                    
@@ -79,6 +94,18 @@ public class mainView extends javax.swing.JFrame {
                     break;
                 case "B":
                     panel = new Biblioteca();
+                    break;
+                case "P":
+                    RealizarPrestamoView pv = new RealizarPrestamoView();
+                    pv.setVisible(true);
+                    break;
+                 case "D":
+                    DevolucionView dv = new DevolucionView();
+                    dv.setVisible(true);
+                    break;
+                case "CP":
+                    MostrarPrestamosView cp = new MostrarPrestamosView();
+                    cp.setVisible(true);
                     break;
                     
             }
@@ -100,22 +127,32 @@ public class mainView extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        gif = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        menPrestamos = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.BorderLayout(20, 20));
+
+        gif.setText("jLabel1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(172, 172, 172)
+                .addComponent(gif)
+                .addContainerGap(242, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 331, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(144, 144, 144)
+                .addComponent(gif)
+                .addContainerGap(169, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -125,6 +162,9 @@ public class mainView extends javax.swing.JFrame {
 
         jMenu4.setText("Bajas");
         MenuBar.add(jMenu4);
+
+        menPrestamos.setText("Prestamos");
+        MenuBar.add(menPrestamos);
 
         setJMenuBar(MenuBar);
         MenuBar.getAccessibleContext().setAccessibleName("menuBar");
@@ -175,8 +215,10 @@ public class mainView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JLabel gif;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenu menPrestamos;
     // End of variables declaration//GEN-END:variables
 }
